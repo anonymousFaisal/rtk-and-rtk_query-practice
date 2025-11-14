@@ -1,6 +1,15 @@
-'use client';
+"use client";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addEmployee } from "../redux/slice";
 
 const AddEmployees = () => {
+  const [empName, setEmpName] = useState("");
+  const dispatch = useDispatch();
+  const dataDispatch = () => {
+    console.log(empName);
+    dispatch(addEmployee(empName));
+  };
   return (
     <div className="container mt-5 d-flex justify-content-center">
       <div className="card shadow-sm p-4" style={{ width: "400px" }}>
@@ -16,11 +25,12 @@ const AddEmployees = () => {
               type="text"
               className="form-control"
               placeholder="Enter employee name"
+              onChange={(e) => setEmpName(e.target.value)}
             />
           </div>
 
           <div className="d-grid">
-            <button type="button" className="btn btn-primary">
+            <button type="button" className="btn btn-primary" onClick={dataDispatch}>
               Add Employee
             </button>
           </div>
