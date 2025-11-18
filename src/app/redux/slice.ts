@@ -14,11 +14,13 @@ const employeesSlice = createSlice({
   initialState,
   reducers: {
     addEmployee: (state, action: PayloadAction<string>) => {
-      console.log(action.payload);
       state.push({ id: nanoid(), name: action.payload });
     },
+    removeEmployee: (state, action: PayloadAction<string>) => {
+      return state.filter((employee) => employee.id !== action.payload);
+    },    
   },
 });
 
-export const { addEmployee } = employeesSlice.actions;
+export const { addEmployee, removeEmployee } = employeesSlice.actions;
 export default employeesSlice.reducer;

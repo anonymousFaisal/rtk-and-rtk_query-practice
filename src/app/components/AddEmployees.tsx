@@ -6,16 +6,21 @@ import { addEmployee } from "../redux/slice";
 const AddEmployees = () => {
   const [empName, setEmpName] = useState("");
   const dispatch = useDispatch();
-  const dataDispatch = () => {
-    console.log(empName);
+
+  const dataDispatch = (e: React.FormEvent) => {
+    e.preventDefault();           // prevent page reload
+    if (!empName.trim()) return;  // avoid empty input
+
     dispatch(addEmployee(empName));
+    setEmpName("");
   };
+
   return (
     <div className="container mt-5 d-flex justify-content-center">
       <div className="card shadow-sm p-4" style={{ width: "400px" }}>
         <h4 className="mb-4 text-center">Add Employee</h4>
 
-        <form>
+        <form onSubmit={dataDispatch}>
           <div className="mb-3">
             <label htmlFor="employeeInput" className="form-label fw-semibold">
               Employee Name
@@ -25,12 +30,13 @@ const AddEmployees = () => {
               type="text"
               className="form-control"
               placeholder="Enter employee name"
+              value={empName}
               onChange={(e) => setEmpName(e.target.value)}
             />
           </div>
 
           <div className="d-grid">
-            <button type="button" className="btn btn-primary" onClick={dataDispatch}>
+            <button type="submit" className="btn btn-primary"> {/* ← type submit */}
               Add Employee
             </button>
           </div>
