@@ -2,14 +2,15 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addEmployee } from "../redux/slice";
+import Link from "next/link";
 
 const AddEmployees = () => {
   const [empName, setEmpName] = useState("");
   const dispatch = useDispatch();
 
   const dataDispatch = (e: React.FormEvent) => {
-    e.preventDefault();           // prevent page reload
-    if (!empName.trim()) return;  // avoid empty input
+    e.preventDefault();
+    if (!empName.trim()) return;
 
     dispatch(addEmployee(empName));
     setEmpName("");
@@ -36,9 +37,15 @@ const AddEmployees = () => {
           </div>
 
           <div className="d-grid">
-            <button type="submit" className="btn btn-primary"> {/* ← type submit */}
+            <button type="submit" className="btn btn-primary">
               Add Employee
             </button>
+          </div>
+
+          <div className="d-grid pt-3">
+            <Link href="/delete-employee" className="btn btn-danger">
+              Delete Employee 
+            </Link>
           </div>
         </form>
       </div>
