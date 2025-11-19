@@ -2,11 +2,24 @@
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/store";
-import { removeEmployee } from "../redux/slice";
+import { removeEmployee, loadEmployees } from "../redux/slice";
+import { useEffect } from "react";
 
 const ShowEmployees = () => {
   const dispatch = useDispatch();
-  const employeeData = useSelector((state: RootState) => state.employees.employees);
+  const employeeData = useSelector(
+    (state: RootState) => state.employees.employees
+  );
+
+  // Load localStorage employees on component mount
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("employees");
+      if (saved) {
+        dispatch(loadEmployees(JSON.parse(saved)));
+      }
+    }
+  }, [dispatch]);
 
   const handleRemove = (id: string) => {
     dispatch(removeEmployee(id));
@@ -26,7 +39,6 @@ const ShowEmployees = () => {
               <span>{employee.name}</span>
 
               <div className="d-flex gap-2">
-                {/* Remove Button */}
                 <button
                   className="btn btn-danger btn-sm"
                   onClick={() => handleRemove(employee.id)}

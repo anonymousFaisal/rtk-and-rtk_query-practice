@@ -1,13 +1,22 @@
-import { createAsyncThunk, createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction, nanoid, current } from "@reduxjs/toolkit";
 
 interface Employee {
   id: string;
   name: string;
 }
 
+interface APIUser {
+  id: number;
+  name: string;
+  username: string;
+  email: string;
+  phone: string;
+  website: string;
+}
+
 interface EmployeesState {
   employees: Employee[];
-  employeeAPIData: unknown[];
+  employeeAPIData: APIUser[];
   isLoading: boolean;
   error: string | null;
 }
@@ -19,8 +28,8 @@ const initialState: EmployeesState = {
   error: null,
 };
 
-// Fetch API
-export const apiData = createAsyncThunk("employees/apiData", async () => {
+// Typed API Fetch
+export const apiData = createAsyncThunk<APIUser[]>("employees/apiData", async () => {
   const response = await fetch("https://jsonplaceholder.typicode.com/users");
   return await response.json();
 });
@@ -29,13 +38,26 @@ const employeesSlice = createSlice({
   name: "employees",
   initialState,
   reducers: {
+    loadEmployees: (state, action: PayloadAction<Employee[]>) => {
+      state.employees = action.payload;
+    },
+
     addEmployee: (state, action: PayloadAction<string>) => {
       state.employees.push({ id: nanoid(), name: action.payload });
+
+      const empData = JSON.stringify(current(state.employees));
+      if (typeof window !== "undefined") {
+        localStorage.setItem("employees", empData);
+      }
     },
+
     removeEmployee: (state, action: PayloadAction<string>) => {
-      state.employees = state.employees.filter(
-        (employee) => employee.id !== action.payload
-      );
+      state.employees = state.employees.filter((emp) => emp.id !== action.payload);
+
+      if (typeof window !== "undefined") {
+        const empData = JSON.stringify(state.employees);
+        localStorage.setItem("employees", empData);
+      }
     },
   },
 
@@ -46,7 +68,7 @@ const employeesSlice = createSlice({
       })
       .addCase(apiData.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.employeeAPIData = action.payload; // store the API data
+        state.employeeAPIData = action.payload;
       })
       .addCase(apiData.rejected, (state) => {
         state.isLoading = false;
@@ -55,5 +77,5 @@ const employeesSlice = createSlice({
   },
 });
 
-export const { addEmployee, removeEmployee } = employeesSlice.actions;
+export const { addEmployee, removeEmployee, loadEmployees } = employeesSlice.actions;
 export default employeesSlice.reducer;

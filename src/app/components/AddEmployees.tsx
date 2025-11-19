@@ -52,6 +52,11 @@ const AddEmployees = () => {
               Show Students 
             </Link>
           </div>
+          <div className="d-grid pt-3">
+            <Link href="/api-data" className="btn btn-success">
+              Show API 
+            </Link>
+          </div>
         </form>
       </div>
     </div>

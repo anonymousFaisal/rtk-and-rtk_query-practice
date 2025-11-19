@@ -2,12 +2,21 @@
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/store";
-import { removeEmployee } from "../redux/slice";
+import { removeEmployee, loadEmployees } from "../redux/slice";
+import { useEffect } from "react";
 
 const DeleteEmployee = () => {
   const dispatch = useDispatch();
-  const employeeData = useSelector((state: RootState) => state.employees);
-
+  const employeeData = useSelector((state: RootState) => state.employees.employees);
+  // Load localStorage employees on component mount
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("employees");
+      if (saved) {
+        dispatch(loadEmployees(JSON.parse(saved)));
+      }
+    }
+  }, [dispatch]);
   const handleRemove = (id: string) => {
     dispatch(removeEmployee(id));
   };
@@ -22,15 +31,9 @@ const DeleteEmployee = () => {
         ) : (
           <ul className="list-group">
             {employeeData.map((employee) => (
-              <li
-                key={employee.id}
-                className="list-group-item d-flex justify-content-between align-items-center"
-              >
+              <li key={employee.id} className="list-group-item d-flex justify-content-between align-items-center">
                 <span>{employee.name}</span>
-                <button
-                  className="btn btn-danger btn-sm"
-                  onClick={() => handleRemove(employee.id)}
-                >
+                <button className="btn btn-danger btn-sm" onClick={() => handleRemove(employee.id)}>
                   Remove
                 </button>
               </li>
