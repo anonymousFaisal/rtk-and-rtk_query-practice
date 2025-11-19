@@ -47,6 +47,11 @@ const AddEmployees = () => {
               Delete Employee 
             </Link>
           </div>
+          <div className="d-grid pt-3">
+            <Link href="/students" className="btn btn-success">
+              Show Students 
+            </Link>
+          </div>
         </form>
       </div>
     </div>
