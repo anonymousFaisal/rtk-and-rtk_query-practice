@@ -6,7 +6,7 @@ import { removeEmployee } from "../redux/slice";
 
 const ShowEmployees = () => {
   const dispatch = useDispatch();
-  const employeeData = useSelector((state: RootState) => state.employees);
+  const employeeData = useSelector((state: RootState) => state.employees.employees);
 
   const handleRemove = (id: string) => {
     dispatch(removeEmployee(id));

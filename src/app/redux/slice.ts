@@ -1,24 +1,57 @@
-import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
 
 interface Employee {
   id: string;
   name: string;
 }
 
-type EmployeesState = Employee[];
+interface EmployeesState {
+  employees: Employee[];
+  employeeAPIData: unknown[];
+  isLoading: boolean;
+  error: string | null;
+}
 
-const initialState: EmployeesState = [];
+const initialState: EmployeesState = {
+  employees: [],
+  employeeAPIData: [],
+  isLoading: false,
+  error: null,
+};
+
+// Fetch API
+export const apiData = createAsyncThunk("employees/apiData", async () => {
+  const response = await fetch("https://jsonplaceholder.typicode.com/users");
+  return await response.json();
+});
 
 const employeesSlice = createSlice({
   name: "employees",
   initialState,
   reducers: {
     addEmployee: (state, action: PayloadAction<string>) => {
-      state.push({ id: nanoid(), name: action.payload });
+      state.employees.push({ id: nanoid(), name: action.payload });
     },
     removeEmployee: (state, action: PayloadAction<string>) => {
-      return state.filter((employee) => employee.id !== action.payload);
-    },    
+      state.employees = state.employees.filter(
+        (employee) => employee.id !== action.payload
+      );
+    },
+  },
+
+  extraReducers: (builder) => {
+    builder
+      .addCase(apiData.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(apiData.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.employeeAPIData = action.payload; // store the API data
+      })
+      .addCase(apiData.rejected, (state) => {
+        state.isLoading = false;
+        state.error = "Failed to fetch API data";
+      });
   },
 });
 
