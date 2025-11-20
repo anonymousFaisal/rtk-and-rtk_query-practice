@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addEmployee } from "../redux/slice";
+import { addEmployee } from "../store/slices/employeeSlice";
 import Link from "next/link";
 
 const AddEmployees = () => {

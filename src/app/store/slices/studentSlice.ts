@@ -17,8 +17,8 @@ const StudentsSlice = createSlice({
       state.push({ id: nanoid(), name: action.payload });
     },
     removeStudent: (state, action: PayloadAction<string>) => {
-      return state.filter((Student) => Student.id !== action.payload);
-    },    
+      return state.filter((student) => student.id !== action.payload);
+    },
   },
 });
 

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./globals.css";
-import { Providers } from "./redux/provider";
+import { Providers } from "./store/provider";
 
 export const metadata: Metadata = {
   title: "RTK and RTK Query practice",

@@ -1,8 +1,8 @@
 "use client";
 
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../redux/store";
-import { removeEmployee, loadEmployees } from "../redux/slice";
+import { RootState } from "../store/store";
+import { removeEmployee, loadEmployees } from "../store/slices/employeeSlice";
 import { useEffect } from "react";
 
 const ShowEmployees = () => {

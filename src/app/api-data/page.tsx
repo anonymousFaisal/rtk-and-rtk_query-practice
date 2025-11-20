@@ -1,20 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { apiData } from "../redux/slice";
-import { RootState, AppDispatch } from "../redux/store";
+import { useGetUsersQuery } from "../store/api/employeesAPI";
 
 const APIData = () => {
-  const dispatch = useDispatch<AppDispatch>();
-
-  const { employeeAPIData, isLoading, error } = useSelector(
-    (state: RootState) => state.employees
-  );
-
-  useEffect(() => {
-    dispatch(apiData());
-  }, [dispatch]);
+  const { data, isLoading, error } = useGetUsersQuery();
 
   return (
     <div className="container mt-5">
@@ -39,7 +28,7 @@ const APIData = () => {
       <div className="row g-4">
         {!isLoading &&
           !error &&
-          employeeAPIData.map((user: any) => (
+          data?.map((user: any) => (
             <div className="col-md-4" key={user.id}>
               <div className="card shadow-sm h-100">
                 <div className="card-body">

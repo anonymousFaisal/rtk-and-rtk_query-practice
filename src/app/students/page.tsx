@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addStudent, removeStudent } from "../redux/mySlice";
-import { RootState } from "../redux/store";
+import { addStudent, removeStudent } from "../store/slices/studentSlice";
+import { RootState } from "../store/store";
 
 const Students = () => {
   const [studentName, setStudentName] = useState("");
 
   const dispatch = useDispatch();
-  const studentsData = useSelector((state: RootState) => state.student);
+  const studentsData = useSelector((state: RootState) => state.students);
 
   const dataDispatch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,16 +61,10 @@ const Students = () => {
         ) : (
           <ul className="list-group">
             {studentsData.map((student) => (
-              <li
-                key={student.id}
-                className="list-group-item d-flex justify-content-between align-items-center"
-              >
+              <li key={student.id} className="list-group-item d-flex justify-content-between align-items-center">
                 <span>{student.name}</span>
 
-                <button
-                  className="btn btn-danger btn-sm"
-                  onClick={() => handleRemove(student.id)}
-                >
+                <button className="btn btn-danger btn-sm" onClick={() => handleRemove(student.id)}>
                   Remove
                 </button>
               </li>
