@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# RTK and RTK Query Practice
 
-## Getting Started
+A Next.js application designed to practice and demonstrate state management using **Redux Toolkit (RTK)** and data fetching with **RTK Query**.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+This project showcases two main approaches to state management side-by-side:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 1. Standard Redux Toolkit (Slices)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Employee Management**:
+  - Add new employees.
+  - View a list of employees.
+  - Delete employees.
+- **Student Management**:
+  - View a list of students.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 2. RTK Query (API Slices)
 
-## Learn More
+- **API Data Fetching**:
+  - Fetches and caches data from an external API using RTK Query.
+  - Demonstrates auto-generated hooks and cache management.
 
-To learn more about Next.js, take a look at the following resources:
+## 🛠️ Tech Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Framework**: [Next.js](https://nextjs.org/) (App Router)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **State Management**: [Redux Toolkit](https://redux-toolkit.js.org/)
+- **Data Fetching**: [RTK Query](https://redux-toolkit.js.org/rtk-query/overview)
+- **Styling**: [React Bootstrap](https://react-bootstrap.github.io/) & Bootstrap 5
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📂 Project Structure
 
-## Deploy on Vercel
+- **`src/app/store`**: Contains the Redux store configuration.
+  - **`slices/`**: Standard RTK slices (`employeeSlice`, `studentSlice`).
+  - **`api/`**: RTK Query API definitions (`employeesAPI`).
+  - **`store.ts`**: Main store setup combining reducers and middleware.
+- **`src/app/components`**: UI components interacting with the store (`AddEmployees`, `ShowEmployees`).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🏁 Getting Started
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1.  **Clone the repository:**
+
+    ```bash
+    git clone <repository-url>
+    ```
+
+2.  **Install dependencies:**
+
+    ```bash
+    npm install
+    ```
+
+3.  **Run the development server:**
+
+    ```bash
+    npm run dev
+    ```
+
+4.  **Open the app:**
+    Visit [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 📝 Usage
+
+- **Home Page**: Add and view employees.
+- **Delete Employee**: Navigate to `/delete-employee` to remove entries.
+- **Show Students**: Navigate to `/students` to view student data.
+- **Show API**: Navigate to `/api-data` to see RTK Query in action.
